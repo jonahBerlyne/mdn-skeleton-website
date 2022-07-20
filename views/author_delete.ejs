@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>
+   <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+ </head>
+ <body>
+  <%- include('./layout.ejs') %>
+   <h1>
+    Title: <%= author.name %>
+   </h1>
+   <p>
+    <%= author.lifespan %>
+   </p>
+   <div style="margin-left: 20px; margin-top: 20px;">
+     <% if (author_books.length> 0) { %>
+      <p>Delete the following books before attempting to delete this author.</p>
+      <h4>Books:</h4>
+      <% author_books.forEach(book=> { %>
+       <a href=<%- book.url %>><%= book.title %></a>
+       <p>
+        <%= book.summary %>
+       </p>
+      <% }); %>
+     <% } else { %>
+      <p>Do you really want to delete this author?</p>
+      <form method="POST" action="">
+       <div class="form-group">
+        <input type="hidden" name="authorid" required="true" id="authorid" class="form-control" value=<%- author._id %>>
+       </div>
+       <button class="btn btn-primary" type="submit">Delete</button>
+      </form>
+     <% } %>
+   </div>
+ </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>
+   <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+ </head>
+ <body>
+  <%- include('./layout.ejs') %>
+   <h1>
+    Author: <%= author.name %>
+   </h1>
+   <p>
+    <%= author.lifespan %>
+   </p>
+   <div style="margin-left: 20px; margin-top: 20px;">
+    <h4>Books:</h4>
+    <ul>
+     <% if (author_books.length> 0) { %>
+      <% author_books.forEach(book => { %>
+       <a href=<%- book.url %>><%= book.title %></a>
+       <p><%= book.summary %></p>
+      <% }); %>
+     <% } else { %>
+      <li>
+       <p>This author has no books.</p>
+      </li>
+     <% } %>
+    </ul>
+    <hr>
+    <p>
+      <a href=<%- `${author.url}/delete` %>>Delete Author</a>
+    </p>
+   </div>
+ </body>
+</html>

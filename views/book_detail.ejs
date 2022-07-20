@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>
+   <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+ </head>
+ <body>
+  <%- include('./layout.ejs') %>
+  <div class="col-sm-10">
+    <h1>
+      <%- book.title %>
+    </h1>
+    <p>
+      <strong>Author:</strong>
+      <a href=<%- book.author.url %> > <%- book.author.name %> </a>
+    </p>
+    <p><strong>Summary:</strong>
+      <%- book.summary %>
+    </p>
+    <p><strong>ISBN:</strong>
+      <%- book.isbn %>
+    </p>
+    <p>
+      <strong>Genre:</strong>
+      <% book.genre.forEach((genre, index)=> { %>
+        <a href=<%- genre.url %> > <%- genre.name %></a>
+        <% }) %>
+    </p>
+  
+    <div>
+      <h4>Copies</h4>
+      <% if (book_instances) { %>
+        <% book_instances.forEach(instance=> {
+          %>
+          <hr />
+          <% if (instance.status=="Available" ) { %>
+            <p class="text-success">
+              <%- instance.status %>
+            </p>
+          <% } else if (instance.status=="Maintenance" ) { %>
+              <p class="text-danger">
+                <%- instance.status %>
+              </p>
+          <% } else { %>
+                <p class="text-warning">
+                  <%- instance.status %>
+                </p>
+          <% } %>
+  
+          <p>
+            <strong>
+              <%- instance.imprint %>
+            </strong>
+          </p>
+  
+          <% if (instance.status !="Available" ) { %>
+            <p>(Due: <%- instance.due_back_formatted %>)</p>
+          <% } %>
+          <p>
+            <strong>Id: </strong>
+            <a href=<%- instance.url %> ><%- instance._id %> </a>
+          </p>
+          <% }) %>
+          <% } else { %>
+            <p>There are no copies of this book in the library.</p>
+          <% } %>
+        <hr>
+        <p>
+          <a href=<%- `${book.url}/delete` %>>Delete Book</a>
+        </p>
+        <p>
+          <a href=<%- `${book.url}/update` %>>Update Book</a>
+        </p>
+   </div>
+ </body>
+</html>
